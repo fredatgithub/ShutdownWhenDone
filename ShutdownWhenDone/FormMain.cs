@@ -23,6 +23,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -64,6 +65,18 @@ namespace ShutdownWhenDone
     private void FormMain_Load(object sender, EventArgs e)
     {
       LoadSettingsAtStartup();
+      if (!IsAdministrator())
+      {
+        //Console.WriteLine("You must be administrator");
+        return;
+      }
+    }
+
+    private static bool IsAdministrator()
+    {
+      WindowsIdentity identity = WindowsIdentity.GetCurrent();
+      WindowsPrincipal principal = new WindowsPrincipal(identity);
+      return principal.IsInRole(WindowsBuiltInRole.Administrator);
     }
 
     private void LoadSettingsAtStartup()
