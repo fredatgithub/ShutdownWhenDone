@@ -68,8 +68,22 @@ namespace ShutdownWhenDone
       if (!IsAdministrator())
       {
         //Console.WriteLine("You must be administrator");
-        return;
+        //return;
       }
+
+      foreach (Process process in GetAllProcesses())
+      {
+        if (!comboBoxProcess.Items.Contains(process.ProcessName))
+        {
+          comboBoxProcess.Items.Add(process.ProcessName);
+        }
+      }
+    }
+
+    private static IEnumerable<Process> GetAllProcesses()
+    {
+      Process[] processlist = Process.GetProcesses();
+      return processlist.ToList();
     }
 
     private static bool IsAdministrator()
