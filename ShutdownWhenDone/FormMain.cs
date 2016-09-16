@@ -756,7 +756,7 @@ namespace ShutdownWhenDone
     {
       if (comboBoxProcess.SelectedIndex == -1)
       {
-        DisplayMessage("You must select a process first", "Select a process", MessageBoxButtons.OK);
+        DisplayMessage(Translate("You must select a process first"), Translate("Select a process"), MessageBoxButtons.OK);
         return;
       }
 
