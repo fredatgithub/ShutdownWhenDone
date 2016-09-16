@@ -436,7 +436,8 @@ namespace ShutdownWhenDone
           SmallToolStripMenuItem.Text = _languageDicoEn["Small"];
           MediumToolStripMenuItem.Text = _languageDicoEn["Medium"];
           LargeToolStripMenuItem.Text = _languageDicoEn["Large"];
-
+          labelProcessList.Text = _languageDicoEn["Choose a process"];
+          buttonShutdownPC.Text = _languageDicoEn["Shutdown when done"];
 
           _currentLanguage = "English";
           break;
@@ -473,6 +474,9 @@ namespace ShutdownWhenDone
           SmallToolStripMenuItem.Text = _languageDicoFr["Small"];
           MediumToolStripMenuItem.Text = _languageDicoFr["Medium"];
           LargeToolStripMenuItem.Text = _languageDicoFr["Large"];
+          labelProcessList.Text = _languageDicoFr["Choose a process"];
+          buttonShutdownPC.Text = _languageDicoFr["Shutdown when done"];
+
 
           _currentLanguage = "French";
           break;
@@ -484,7 +488,11 @@ namespace ShutdownWhenDone
 
     private void cutToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
+      Control focusedControl = FindFocusedControl(new List<Control>
+      {
+        labelProcessList, comboBoxProcess, buttonShutdownPC
+      });
+
       var tb = focusedControl as TextBox;
       if (tb != null)
       {
@@ -494,7 +502,11 @@ namespace ShutdownWhenDone
 
     private void copyToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
+      Control focusedControl = FindFocusedControl(new List<Control>
+      {
+        labelProcessList, comboBoxProcess, buttonShutdownPC
+      });
+
       var tb = focusedControl as TextBox;
       if (tb != null)
       {
@@ -504,7 +516,11 @@ namespace ShutdownWhenDone
 
     private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
+      Control focusedControl = FindFocusedControl(new List<Control>
+      {
+        labelProcessList, comboBoxProcess, buttonShutdownPC
+      });
+
       var tb = focusedControl as TextBox;
       if (tb != null)
       {
@@ -514,7 +530,11 @@ namespace ShutdownWhenDone
 
     private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
+      Control focusedControl = FindFocusedControl(new List<Control>
+      {
+        labelProcessList, comboBoxProcess, buttonShutdownPC
+      });
+
       TextBox control = focusedControl as TextBox;
       if (control != null) control.SelectAll();
     }
@@ -689,7 +709,7 @@ namespace ShutdownWhenDone
 
     private void AdjustAllControls()
     {
-      AdjustControls(); // insert here all labels, textboxes and buttons, one method per line of controls
+      AdjustControls(labelProcessList, comboBoxProcess, buttonShutdownPC);
     }
 
     private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -736,23 +756,26 @@ namespace ShutdownWhenDone
     {
       if (comboBoxProcess.SelectedIndex == -1)
       {
+        DisplayMessage("You must select a process first", "Select a process", MessageBoxButtons.OK);
         return;
       }
 
-      while (ProcessIsRunning(comboBoxProcess.SelectedText))
+      while (IsProcessRunningByName(comboBoxProcess.SelectedText))
       {
         Thread.Sleep(5000);
       }
 
       // shutdown pc
-      // TODO   add code
+      Process.Start("shutdown", "/s");
+      Application.Exit();
     }
 
-    private bool ProcessIsRunning(string processName)
+    private static bool IsProcessRunningByName(string processName)
     {
-      bool result = true;
-      // TODO add code
-      return result;
+      try { Process.GetProcessesByName(processName); }
+      catch (InvalidOperationException) { return false; }
+      catch (ArgumentException) { return false; }
+      return true;
     }
   }
 }

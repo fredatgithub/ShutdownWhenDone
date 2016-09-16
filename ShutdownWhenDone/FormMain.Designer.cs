@@ -372,9 +372,9 @@
       this.labelProcessList.AutoSize = true;
       this.labelProcessList.Location = new System.Drawing.Point(31, 76);
       this.labelProcessList.Name = "labelProcessList";
-      this.labelProcessList.Size = new System.Drawing.Size(95, 13);
+      this.labelProcessList.Size = new System.Drawing.Size(92, 13);
       this.labelProcessList.TabIndex = 2;
-      this.labelProcessList.Text = "Choose a process:";
+      this.labelProcessList.Text = "Choose a process";
       // 
       // comboBoxProcess
       // 
@@ -398,13 +398,13 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(524, 159);
+      this.ClientSize = new System.Drawing.Size(524, 157);
       this.Controls.Add(this.buttonShutdownPC);
       this.Controls.Add(this.comboBoxProcess);
       this.Controls.Add(this.labelProcessList);
       this.Controls.Add(this.menuStrip1);
       this.MainMenuStrip = this.menuStrip1;
-      this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.Margin = new System.Windows.Forms.Padding(2);
       this.Name = "FormMain";
       this.ShowIcon = false;
       this.Text = "Shutdown when done";
